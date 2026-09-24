@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>GuidePass Trip Agent</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 760px; margin: 24px auto; padding: 0 16px; color: #1a1a1a; }
+  h1 { font-size: 1.25rem; }
+  #chat { border: 1px solid #ddd; border-radius: 8px; padding: 12px; height: 420px; overflow-y: auto; margin-bottom: 12px; }
+  .msg { margin: 8px 0; padding: 8px 12px; border-radius: 8px; max-width: 85%; white-space: pre-wrap; }
+  .user { background: #dbeafe; margin-left: auto; text-align: right; }
+  .bot { background: #f3f4f6; }
+  form { display: flex; gap: 8px; }
+  input[type=text] { flex: 1; padding: 8px; font-size: 1rem; }
+  button { padding: 8px 16px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 0.85rem; }
+  th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+  th { background: #f3f4f6; }
+</style>
+</head>
+<body>
+<h1>GuidePass Trip Agent — TP.HCM</h1>
+<div id="chat"></div>
+<form id="form">
+  <input id="input" type="text" placeholder="Vd: Mình ở khách sạn gần chợ Bến Thành, thứ Bảy này rảnh từ 8h đến 20h..." autocomplete="off">
+  <button type="submit">Gửi</button>
+</form>
+<div id="itinerary"></div>
+
+<script>
+const sessionId = (() => {
+  let id = localStorage.getItem("gp_session_id");
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem("gp_session_id", id); }
+  return id;
+})();
+
+const chatEl = document.getElementById("chat");
+const formEl = document.getElementById("form");
+const inputEl = document.getElementById("input");
+const itinEl = document.getElementById("itinerary");
+
+function addMsg(text, who) {
+  const div = document.createElement("div");
+  div.className = "msg " + who;
+  div.textContent = text;
+  chatEl.appendChild(div);
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+function renderItinerary(itin) {
+  if (!itin || !itin.stops || itin.stops.length === 0) { itinEl.innerHTML = ""; return; }
+  const rows = itin.stops.map(s => `
+    <tr>
+      <td>${s.arrive}–${s.leave}</td>
+      <td>${s.name}</td>
+      <td>${s.indoor ? "trong nhà" : "ngoài trời"}</td>
+      <td>${s.travel_minutes_from_prev} phút</td>
+      <td>${s.weather_note}</td>
+      <td>${s.reason}</td>
+    </tr>`).join("");
+  itinEl.innerHTML = `
+    <h3>Lịch trình ${itin.date}</h3>
+    <table>
+      <tr><th>Giờ</th><th>Điểm</th><th>Trong/ngoài</th><th>Di chuyển</th><th>Thời tiết</th><th>Lý do</th></tr>
+      ${rows}
+    </table>`;
+}
+
+formEl.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const message = inputEl.value.trim();
+  if (!message) return;
+  addMsg(message, "user");
+  inputEl.value = "";
+  inputEl.disabled = true;
+  try {
+    const resp = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId, message }),
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    addMsg(data.reply, "bot");
+    renderItinerary(data.itinerary);
+  } catch (err) {
+    addMsg("Lỗi: " + err.message, "bot");
+  } finally {
+    inputEl.disabled = false;
+    inputEl.focus();
+  }
+});
+</script>
+</body>
+</html>
