@@ -97,7 +97,7 @@ Mời bạn xem video ngắn minh họa luồng hoạt động của agent (giao
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=kyVzIkcZvw8">
-    <img src="https://img.shields.io/badge/▶_Xem_Video_Demo_Google_Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Xem Demo Youtube"/>
+    <img src="https://img.shields.io/badge/▶_Xem_Video_Demo_Youtube-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Xem Demo Youtube"/>
   </a>
 </p>
 
