@@ -101,5 +101,9 @@ Mời bạn xem video ngắn minh họa luồng hoạt động của agent (giao
   </a>
 </p>
 
+## 📺 Video Demo
+
+[![Xem Demo GuidePass Trip Agent trên YouTube](https://www.youtube.com/watch?v=kyVzIkcZvw8)](https://www.youtube.com/watch?v=kyVzIkcZvw8)
+
 ---
 *Phát triển cho GuidePass Internship Assessment - 2026.*
