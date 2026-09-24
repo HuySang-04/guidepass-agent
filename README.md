@@ -96,14 +96,10 @@ Chạy các kịch bản này theo thứ tự với cùng một `session_id`:
 Mời bạn xem video ngắn minh họa luồng hoạt động của agent (giao diện chat, xử lý thời tiết, cập nhật lịch trình theo `session_id`):
 
 <p align="center">
-  <a href="https://drive.google.com/file/d/1UFeZF4Fr-VNiA_ut8oeWgdPZ_xfTFeGE/view?usp=sharing">
-    <img src="https://img.shields.io/badge/▶_Xem_Video_Demo_Google_Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Xem Demo Google Drive"/>
+  <a href="https://www.youtube.com/watch?v=kyVzIkcZvw8">
+    <img src="https://img.shields.io/badge/▶_Xem_Video_Demo_Google_Drive-FF0000?style=for-the-badge&logo=googledrive&logoColor=white" alt="Xem Demo Youtube"/>
   </a>
 </p>
-
-## 📺 Video Demo
-
-[![Xem Demo GuidePass Trip Agent trên YouTube](https://www.youtube.com/watch?v=kyVzIkcZvw8)](https://www.youtube.com/watch?v=kyVzIkcZvw8)
 
 ---
 *Phát triển cho GuidePass Internship Assessment - 2026.*
